@@ -26,7 +26,7 @@ console.log(isPalindrome('abca')); // doit afficher false
 
 // Ajoutez les annotations de type à la déclaration de la fonction suivante et écrivez son code :
 
-type Vector2D = {
+interface Vector2D {
     x: number;
     y: number;
 }
