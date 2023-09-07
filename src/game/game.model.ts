@@ -32,8 +32,7 @@ export class Game {
             this._remainingTries = this._remainingTries-1;
             if (this._remainingTries == 0) {
                 this._status = GameStatus.lost
-            }
-            if(guess > this.number) {
+            } else if(guess > this.number) {
                 this._status = GameStatus.lower;
             } else {
                 this._status = GameStatus.higher;
