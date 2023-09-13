@@ -7,6 +7,7 @@ export class City implements ICity {
     readonly latitude: number;
     readonly longitude: number;
 
+
     constructor(name: string, info: string, latitude: number, longitude: number){
         this.name = name;
         this.info = info;
@@ -15,9 +16,17 @@ export class City implements ICity {
     }
 
     static fetchCities(name: string): City[] {
-        return [ 
-            new City("Paris", "75, Paris, Île-de-France", 48.859, 2.347),
-            new City("Reims", "51, Marne, Grand Est", 49.2509, 4.0556)
-        ];
+
+        let cityList: City[];
+        fetch("https://api-adresse.data.gouv.fr/search/?type=municipality&q="+name)
+        .then(cities => {
+            for (const city of cities) {
+                cityList.push(new City(city.propeties.name,city.propeties.context,city.propeties.x,city.propeties.y));
+            }
+            return cityList;
+        })
+        .catch(err=>{
+            console.log(err);
+          })
     }
 }
