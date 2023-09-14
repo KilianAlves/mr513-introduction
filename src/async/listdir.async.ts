@@ -8,7 +8,7 @@ async function listDirWithSizes(path: string): Promise<void> {
         const files = await readdir(path);
 
         for (const file of files) {
-            let sizes = await lstat(file);
+            const sizes = await lstat(file);
             console.log(file+" size: "+sizes.size);
           }
       } catch (err) {
