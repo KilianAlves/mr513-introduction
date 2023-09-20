@@ -1,0 +1,10 @@
+<%- include('../partials/header') -%>
+<h1>Le juste prix(nombre)</h1>
+
+<%= game.remainingTries %>
+
+<form action="/play" method="post">
+  <label for="number">Entrez un nombre</label>
+  <input type="number"  id="number" value="">
+  <input type="submit"></input>
+</form>
