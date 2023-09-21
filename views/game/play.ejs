@@ -1,10 +1,23 @@
 <%- include('../partials/header') -%>
+
+<% if (game._status == 1) { 
+  include('./won.ejs')
+   } else if (game._status == 2) { 
+    include('./lost.ejs')
+  } else { %>
 <h1>Le juste prix(nombre)</h1>
 
-<%= game.remainingTries %>
+
 
 <form action="/play" method="post">
+  <label for="guess">Tentative restante : <%= game.remainingTries %> </label>
+  <% if (game._status == 3) { %>
+    <p>Vous nombre est plus petit</p>
+    <% } else if (game._status == 4) { %>
+    <p>Vous nombre est plus grand</p>
+    <% } %>
   <label for="guess">Entrez un nombre</label>
-  <input type="number"  id="guess" value="">
+  <input type="number" id="guess" name="guess" value="">
   <input type="submit"></input>
 </form>
+<% } %>

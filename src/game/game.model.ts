@@ -6,15 +6,26 @@ export enum GameStatus {
     lower
 }
 
+
 export class Game {
     public readonly number: number;
     private _remainingTries: number;
     private _status: GameStatus;
 
-    constructor() {
-        this._remainingTries = 10;
-        this.number = Math.floor(Math.random() * 1000) + 1
-        this._status = GameStatus.new;
+    constructor(game?: Game ) {
+
+        if (game != undefined){
+            this._remainingTries = game._remainingTries;
+            this.number = game.number;
+            this._status = game._status;
+        }
+        else{
+
+            this._remainingTries = 10;
+            this.number = Math.floor(Math.random() * 1000) + 1
+            this._status = GameStatus.new;  
+        }
+
     }
 
     get remainingTries(): number {
