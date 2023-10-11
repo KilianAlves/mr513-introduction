@@ -6,11 +6,25 @@
 
 
 <form action="/play" method="post">
-  <label for="guess">Tentative restante : <%= game.remainingTries %> </label>
+  <% if (game._status == 0) { %>
+    <p>Vous avez 10 essais pour deviner un nombre compris entre 1 et 1000.</p>
+  <% } %>
+  <label for="guess">
+    Tentative restante :
+    <% for (let i = 1; i < 11; i++) { %>  
+      <% if (i > game.remainingTries) { %>
+        <span style="background-color: red;">
+          <% } else { %>
+            <span style="background-color: green;">
+            <% } %>
+          <%= i %>
+          </span>   
+      <% } %>
+  </label>
   <% if (game._status == 3) { %>
-    <p>Vous nombre est trop petit</p>
+    <p>Le nombre à deviner est supérieur.</p>
     <% } else if (game._status == 4) { %>
-    <p>Vous nombre est trop grand</p>
+    <p>Le nombre à deviner est inférieur.</p>
     <% } %>
   <label for="guess">Entrez un nombre</label>
   <input type="number" id="guess" name="guess" value="">
