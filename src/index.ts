@@ -1,7 +1,7 @@
 import express from 'express';
-import { Game, GameStatus } from './game/game.model';
+import { Game } from './game/game.model';
+import { GameController } from './game/game.controller';
 import { body } from 'express-validator';
-import { validationResult } from 'express-validator';
 import session from 'express-session';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
@@ -30,36 +30,12 @@ app.use(express.static('public'));
 //    res.render('index', { title: req.params.title });
 //});
 
-app.get('/play', (req, res) => {
-    const game = new Game();
-    req.session.game = game;
-    console.log(game)
-    res.render('game/play', { game });
-    
-    
-});
-
+app.get('/play', GameController.start);
 app.post('/play',
         express.urlencoded({ extended: true }),
         body('guess').notEmpty().isInt({ min: 1, max: 1000 }),
-        (req, res) => {
-            const gameModel = req.session.game as Game;
-            const game = new Game(gameModel);
-            const result = validationResult(req);
-            if (result.isEmpty()) {
-                console.log(req.session.game);
-                game.playOneTurn(parseInt(req.body.guess));
-                console.log(game)
-                req.session.game = game;
-            }
-            if(game.status == GameStatus.won) {
-                res.render('game/won', { game });
-            } else if (game.status == GameStatus.lost) {
-                res.render('game/lost', { game });
-            } else {
-                res.render('game/play', { game });
-            }
-    });
+        GameController.continue
+        );
 
 app.listen(port, () => {
     console.log(`Server local démarré : http://localhost:${port}`);
