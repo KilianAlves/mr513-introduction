@@ -1,5 +1,5 @@
 import express from 'express';
-import { Game } from './game/game.model';
+import { Game, GameStatus } from './game/game.model';
 import { body } from 'express-validator';
 import { validationResult } from 'express-validator';
 import session from 'express-session';
@@ -52,7 +52,13 @@ app.post('/play',
                 console.log(game)
                 req.session.game = game;
             }
-            res.render('game/play', { game });
+            if(game.status == GameStatus.won) {
+                res.render('game/won', { game });
+            } else if (game.status == GameStatus.lost) {
+                res.render('game/lost', { game });
+            } else {
+                res.render('game/play', { game });
+            }
     });
 
 app.listen(port, () => {
