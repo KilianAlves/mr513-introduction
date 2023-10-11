@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Game, GameStatus  } from './game.model';
 import { validationResult } from 'express-validator';
+import session from 'express-session';
 
 export class GameController {
     
